@@ -39,9 +39,9 @@ app.Use(next => context =>
     if (string.Equals(context.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase) ||
         string.Equals(context.Request.Path.Value, "/index.html", StringComparison.OrdinalIgnoreCase))
     {
-        // We can send the request token as a JavaScript-readable cookie, and the antiforgery token as a form field
+        // The request token can be sent as a JavaScript-readable cookie
         var tokens = antiforgery.GetAndStoreTokens(context);
-        context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken);
+        context.Response.Cookies.Append("CSRF-TOKEN", tokens.RequestToken);
     }
 
     return next(context);

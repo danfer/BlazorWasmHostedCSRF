@@ -67,9 +67,10 @@ else
 
     private async Task HandleSubmit()
     {
-        var token = await JSRuntime.InvokeAsync<string>("getCookie", "XSRF-TOKEN");
+        var token = await JSRuntime.InvokeAsync<string>("getCookie", "CSRF-TOKEN");
 
         // Add the token to the HttpClient headers
+        Http.DefaultRequestHeaders.Remove("X-CSRF-TOKEN");
         Http.DefaultRequestHeaders.Add("X-CSRF-TOKEN", token);
 
         var response = await Http.PostAsJsonAsync("WeatherForecast", forecast);
